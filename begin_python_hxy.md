@@ -30,3 +30,44 @@ jupyter notebook
 ```
 保存为jupyteri.bat，将文件放置于环境变量path中的某个目录下，比如```C:\Windows\System32```中
 下次启动时，只需在cmd下输入```jupyteri```即可。
+
+
+## 4. Tensorflow+Cuda+keras
+- pip install --upgrade --ignore-installed tensorflow-gpu
+- nvdia-smi
+- nvcc查看cuda版本
+  - sudo apt install nvidia-cuda-toolkit
+  - nvcc --version
+
+```
+# Add NVIDIA package repositories
+# Add HTTPS support for apt-key
+sudo apt-get install gnupg-curl
+wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1604/x86_64/cuda-repo-ubuntu1604_10.0.130-1_amd64.deb
+sudo dpkg -i cuda-repo-ubuntu1604_10.0.130-1_amd64.deb
+sudo apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1604/x86_64/7fa2af80.pub
+sudo apt-get update
+wget http://developer.download.nvidia.com/compute/machine-learning/repos/ubuntu1604/x86_64/nvidia-machine-learning-repo-ubuntu1604_1.0.0-1_amd64.deb
+sudo apt install ./nvidia-machine-learning-repo-ubuntu1604_1.0.0-1_amd64.deb
+sudo apt-get update
+
+# Install NVIDIA driver
+# Issue with driver install requires creating /usr/lib/nvidia
+sudo mkdir /usr/lib/nvidia
+sudo apt-get install --no-install-recommends nvidia-418
+# Reboot. Check that GPUs are visible using the command: nvidia-smi
+
+# Install development and runtime libraries (~4GB)
+sudo apt-get install --no-install-recommends \
+    cuda-10-0 \
+    libcudnn7=7.6.2.24-1+cuda10.0  \
+    libcudnn7-dev=7.6.2.24-1+cuda10.0
+
+
+# Install TensorRT. Requires that libcudnn7 is installed above.
+sudo apt-get install -y --no-install-recommends libnvinfer5=5.1.5-1+cuda10.0 \
+    libnvinfer-dev=5.1.5-1+cuda10.0
+
+```
+
+https://blog.csdn.net/hhy_csdn/article/details/82860192
